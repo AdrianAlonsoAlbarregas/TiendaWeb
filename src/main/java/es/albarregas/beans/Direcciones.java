@@ -1,0 +1,79 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package es.albarregas.beans;
+
+import java.io.Serializable;
+
+/**
+ *
+ * @author Adrian
+ */
+public class Direcciones implements Serializable {
+    private int idDireccion;
+    private int idCliente;
+    private String nombreDireccion;
+    private String direccion;
+    private int codigoPostal;
+    private int idPueblo;
+    private int telefono;
+
+    public int getIdDireccion() {
+        return idDireccion;
+    }
+
+    public void setIdDireccion(int idDireccion) {
+        this.idDireccion = idDireccion;
+    }
+
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public String getNombreDireccion() {
+        return nombreDireccion;
+    }
+
+    public void setNombreDireccion(String nombreDireccion) {
+        this.nombreDireccion = nombreDireccion;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public int getCodigoPostal() {
+        return codigoPostal;
+    }
+
+    public void setCodigoPostal(int codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
+
+    public int getIdPueblo() {
+        return idPueblo;
+    }
+
+    public void setIdPueblo(int idPueblo) {
+        this.idPueblo = idPueblo;
+    }
+
+    public int getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(int telefono) {
+        this.telefono = telefono;
+    }
+    
+}

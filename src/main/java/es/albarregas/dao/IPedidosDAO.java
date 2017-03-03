@@ -1,0 +1,21 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package es.albarregas.dao;
+
+import es.albarregas.beans.Pedidos;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author Adrian
+ */
+public interface IPedidosDAO {
+    public void addPedido(Pedidos pedido);
+    public void updatePedido(Pedidos pedido);
+    public void deletePedido(String where);
+    public ArrayList<Pedidos> getPedidos(String where);
+    public void closeConnection();
+}

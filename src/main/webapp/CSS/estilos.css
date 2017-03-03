@@ -1,0 +1,74 @@
+#cabecera{
+    width:100%;
+}
+#cabecera-icono{
+    display: inline-block;
+}
+#cabecera-buscador{
+    margin-top: 2%;
+}
+#cabecera-menu{
+    margin-top: 10%;
+}
+#cabecera-titulo{
+    font-size: 16px;
+}
+#cabecera-navegacion{
+    background-color: red;
+}
+#navegacion-elemento{
+    color:black;
+    text-align: center;
+    display: inline-block;
+}
+#login-mensaje{
+    text-align: center;
+}
+#buscador-input{
+    width:500px;
+}
+#navegacion-mensaje{
+    text-align: center;
+    margin-top: 4%;
+}
+#pie-imagen{
+    width: 48px;
+    height: 48px;
+}
+#pie-mensaje{
+    margin-top:4%;
+}
+#pie{
+    background-color:red;
+}
+
+#carousel{
+    text-align: center;
+    display: block;
+}
+#carousel-elemento{
+    
+}
+#carousel-elemento-imagen{
+    height: 480px;
+    width: 480px;
+    display: inline-block;
+}
+#carousel-flecha{
+    display: inline-block;
+    text-align: center;
+}
+#mensaje{
+    text-align: center;
+}
+#botones-paginacion{
+    clear:both;
+    text-align: center;
+}
+#datos-mod{
+    text-align: center;
+    color: blue;
+}
+.centrar{
+    text-align:center;
+}
