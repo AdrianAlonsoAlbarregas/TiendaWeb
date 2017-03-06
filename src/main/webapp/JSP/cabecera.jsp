@@ -10,6 +10,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="author" content="Adrian Alonso Montero" />
+        <meta name="generator" content="Netbeans" />
+        <meta name="robots" content="index, follow" />
         <title>Shopware</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -60,7 +63,7 @@
                                         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Menu <span class="caret"></span></button>
                                         <ul class="dropdown-menu">
                                             <li><a href="${pageContext.request.contextPath}/JSP/perfilUsuario.jsp">Perfil</a></li>
-                                            <li><a href="${pageContext.request.contextPath}/JSP/carrito.jsp">Carrito</a></li>
+                                            <li><a href="${pageContext.request.contextPath}/ContrCarrito">Carrito</a></li>
                                             <li><a href="${pageContext.request.contextPath}/ContrLogout">Salir de la cuenta</a></li>
                                         </ul>
                                     </div>

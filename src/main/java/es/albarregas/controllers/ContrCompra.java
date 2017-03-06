@@ -42,7 +42,7 @@ public class ContrCompra extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession sesion = request.getSession();
-        Clientes cliente = (Clientes) sesion.getAttribute("sessionClient");
+        Clientes cliente = (Clientes) sesion.getAttribute("clienteSesion");
         DAOFactory daof = DAOFactory.getDAOFactory(1);
         IPedidosDAO pdao = daof.getPedidosDAO();
         IProductosDAO prdao = daof.getProductosDAO();
@@ -53,8 +53,12 @@ public class ContrCompra extends HttpServlet {
         if (sesion.getAttribute("pedidoActual") == null) {
             pedido.setIdCliente(cliente.getIdCliente());
             pdao.addPedido(pedido);
-            ArrayList<Pedidos> listaPedidos = pdao.getPedidos("where IdCliente=" + cliente.getIdCliente());
-            pedido = listaPedidos.get(listaPedidos.size() - 1);
+            ArrayList<Pedidos> listaPedidos = pdao.getPedidos("where IdCliente=" + pedido.getIdCliente());
+            if (listaPedidos.isEmpty()) {
+                pedido = listaPedidos.get(0);
+            } else {
+                pedido = listaPedidos.get(listaPedidos.size() - 1);
+            }
             sesion.setAttribute("pedidoActual", pedido);
         } else {
             pedido = (Pedidos) sesion.getAttribute("pedidoActual");
@@ -62,11 +66,14 @@ public class ContrCompra extends HttpServlet {
         if (sesion.getAttribute("carrito") == null) {
             producto.setIdPedido(pedido.getIdPedido());
             producto.setIdProducto(Integer.parseInt(request.getParameter("producto")));
-            producto.setCantidad(1);
+            producto.setNumeroLinea(1);
+            producto.setCantidad(Integer.parseInt(request.getParameter("cantidad")));
             double precioProducto = prdao.getProductos("where IdProducto=" + producto.getIdProducto()).get(0).getPrecioUnitario();
             producto.setPrecioUnitario(precioProducto);
+            pedido.setIva(pedido.getIva() + ((precioProducto - (precioProducto / 1.21)) * producto.getCantidad()));
             lpdao.addLinea(producto);
-            productosCarrito = lpdao.getLineas("where IdPedido=" + producto.getIdPedido());
+            productosCarrito = lpdao.getLineas(producto.getIdPedido());
+            pedido.setLineaPedidos(productosCarrito);
             sesion.setAttribute("carrito", productosCarrito);
         } else {
             boolean enCarrito = false;
@@ -84,11 +91,21 @@ public class ContrCompra extends HttpServlet {
                 producto.setIdPedido(pedido.getIdPedido());
                 producto.setIdProducto(Integer.parseInt(request.getParameter("producto")));
                 producto.setCantidad(Integer.parseInt(request.getParameter("cantidad")));
+                producto.setNumeroLinea(productosCarrito.get(productosCarrito.size() - 1).getNumeroLinea() + 1);
                 double precioProducto = prdao.getProductos("where IdProducto=" + producto.getIdProducto()).get(0).getPrecioUnitario();
                 producto.setPrecioUnitario(precioProducto);
                 lpdao.addLinea(producto);
             }
-            productosCarrito = lpdao.getLineas("where IdPedido=" + producto.getIdPedido());
+ 
+            pedido.setLineaPedidos(productosCarrito);
+            double iva = 0;
+            for (LineaPedidos linea : productosCarrito) {
+                double precioProducto = linea.getPrecioUnitario() * linea.getCantidad();
+                iva = iva + ((precioProducto / 1.21) * 0.21);
+            }
+            pedido.setIva(iva);
+            pdao.updatePedido(pedido);
+            productosCarrito = lpdao.getLineas(producto.getIdPedido());
             sesion.setAttribute("carrito", productosCarrito);
         }
     }

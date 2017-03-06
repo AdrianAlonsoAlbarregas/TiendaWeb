@@ -12,6 +12,14 @@
         <servlet-name>ContrRegistro</servlet-name>
         <url-pattern>/ContrRegistro</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>ContrCarrito</servlet-name>
+        <servlet-class>es.albarregas.controllers.ContrCarrito</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ContrCarrito</servlet-name>
+        <url-pattern>/ContrCarrito</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

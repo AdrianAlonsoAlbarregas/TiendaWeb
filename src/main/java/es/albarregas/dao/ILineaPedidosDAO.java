@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public interface ILineaPedidosDAO {
     public void addLinea(LineaPedidos linea);
-    public ArrayList<LineaPedidos> getLineas(String where);
+    public ArrayList<LineaPedidos> getLineas(int idPedido);
     public void deleteLinea(String where);
     public void updateLinea (LineaPedidos linea);
     public void closeConnection();

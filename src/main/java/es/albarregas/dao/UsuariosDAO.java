@@ -65,7 +65,7 @@ public class UsuariosDAO implements IUsuariosDAO {
     @Override
     public void updateUsuario(Usuarios usuario) {
         try {
-            String sql = "update usuarios set Email=?, Clave=? where IdUsuario = ?";
+            String sql = "update usuarios set Email=?, Clave=MD5(?) where IdUsuario = ?";
             PreparedStatement preparada = ConnectionFactory.getConnection().prepareStatement(sql);
             preparada.setString(1, usuario.getEmail());
             preparada.setString(2, usuario.getClave());

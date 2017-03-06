@@ -38,14 +38,21 @@ public class ContrCarrito extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession sesion = request.getSession();
-        Clientes cliente = (Clientes) sesion.getAttribute("sessionClient");
+        Clientes cliente = (Clientes) sesion.getAttribute("clienteSesion");
         DAOFactory daof = DAOFactory.getDAOFactory(1);
         IPedidosDAO pdao = daof.getPedidosDAO();
-        ArrayList<Pedidos> listaPedidos = pdao.getPedidos("where IdCliente="+cliente.getIdCliente());
-        if(listaPedidos!=null || !listaPedidos.isEmpty()){
-        request.setAttribute("listaPedidos", listaPedidos);
+        try {
+            ArrayList<Pedidos> listaPedidos= pdao.getPedidos("where IdCliente=" + cliente.getIdCliente());
+            if (listaPedidos.isEmpty()) {
+                request.setAttribute("carritoVacio", 1);
+            } else {
+                request.setAttribute("carritoVacio", 0);
+                request.setAttribute("listaPedidos", listaPedidos);
+            }
+        } catch (NullPointerException e) {
+            request.setAttribute("carritoVacio", 1);
         }
-        String url="JSP/carrito.jsp";
+        String url = "JSP/carrito.jsp";
         request.getRequestDispatcher(url).forward(request, response);
     }
 

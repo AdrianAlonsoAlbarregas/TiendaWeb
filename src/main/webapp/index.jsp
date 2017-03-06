@@ -10,6 +10,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="author" content="Adrian Alonso Montero" />
+        <meta name="generator" content="Netbeans" />
+        <meta name="robots" content="index, follow" />
         <title>Shopware</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -19,7 +22,7 @@
     <body>
         <jsp:include page="JSP/cabecera.jsp"/>
         <div class="container-fluid">
-            <p class="centrar hidden" id="mensajeCompra">Producto añadido al carrito</p>
+            <p class="centrar colorVerde hidden" id="mensajeCompra">Producto añadido al carrito</p>
             <h1 id="mensaje"><u>Productos destacados por la comunidad:</u></h1>
             <div id="slider" class="carousel slide" data-ride="carousel">
 
@@ -29,7 +32,7 @@
                         <p id="carousel-elemento-texto"><h2><c:out value="${productos[2].denominacion}"/></h2>
                         puntuacion de la comunidad: <h4><c:out value="${productos[2].rating}"/>/5</p>
                             <c:if test="${sessionScope.usuarioSesion !=null}">
-                                <button class="btn btn-success" id="btnComprar" value="${productos[2].idProducto}">Comprar</button>
+                                <button class="btn btn-success btnComprar" id="btnComprar" value="${productos[2].idProducto}">Añadir al carrito</button>
                             </c:if>
                     </div>
 
@@ -41,7 +44,7 @@
                                 <p id="carousel-elemento-texto"><h2><c:out value="${producto.denominacion}"/></h2>
                                 puntuacion de la comunidad: <h4><c:out value="${producto.rating}"/>/5</h4></p>
                                 <c:if test="${sessionScope.usuarioSesion !=null}">
-                                    <button class="btn btn-success" id="btnComprar" value="${producto.idProducto}">Comprar</button>
+                                    <button class="btn btn-success btnComprar" id="btnComprar" value="${producto.idProducto}">Añadir al carrito</button>
                                 </c:if>
                             </div>
                         </c:if>
@@ -60,20 +63,24 @@
         </div>
         <jsp:include page="JSP/pie.jsp"/>
         <script>
-            $("#btnComprar").click(function () {
+            $(".btnComprar").click(function () {
                 $.ajax({
                     type: "GET",
                     url: "${pageContext.request.contextPath}/ContrCompra",
-                    data: {cantidad:"1", producto: $(this).val()},
+                    data: {cantidad: "1", producto: $(this).val()},
                     dataType: 'text',
                     error: function (jqXHR, textStatus, errorThrown) {
                         alert(errorThrown);
                     },
                     success: function () {
-                       $("#mensajeCompra").fadeIn('slow').animate({opacity: 1.0}, 1500).effect("pulsate", { times: 2 }, 800).fadeOut('slow');
+                        $("#mensajeCompra").removeClass("hidden");
+                        setTimeout(ocultar(), 2000);
                     }
                 });
             });
+            function ocultar() {
+                $("#mensajeCompra").addClass("hidden");
+            }
         </script>
     </body>
 </html>

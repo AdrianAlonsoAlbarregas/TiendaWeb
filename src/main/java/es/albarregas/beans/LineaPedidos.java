@@ -6,6 +6,7 @@
 package es.albarregas.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,6 +17,7 @@ public class LineaPedidos implements Serializable {
     private int numeroLinea;
     private int idProducto;
     private int cantidad;
+    private ArrayList<Productos> producto;
     private double precioUnitario;
 
     public int getIdPedido() {
@@ -57,5 +59,17 @@ public class LineaPedidos implements Serializable {
     public void setPrecioUnitario(double precioUnitario) {
         this.precioUnitario = precioUnitario;
     }
+
+    public ArrayList<Productos> getProducto() {
+        return producto;
+    }
+
+    public void setProducto(ArrayList<Productos> producto) {
+        this.producto = producto;
+    }
+
+    
+
+    
     
 }

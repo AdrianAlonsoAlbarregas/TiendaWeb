@@ -6,9 +6,11 @@
 package es.albarregas.dao;
 
 import es.albarregas.beans.LineaPedidos;
+import es.albarregas.beans.Productos;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,7 +31,7 @@ public class LineaPedidosDAO implements ILineaPedidosDAO{
             preparada.setInt(3, linea.getIdProducto());
             preparada.setInt(4, linea.getCantidad());
             preparada.setDouble(5, linea.getPrecioUnitario());
-            preparada.executeQuery();
+            preparada.executeUpdate();
         }catch(SQLException e){
             System.out.println("Algo ha petao al añadir una linea");
             Logger.getLogger(LineaPedidosDAO.class.getName()).log(Level.SEVERE, null, e);
@@ -39,12 +41,12 @@ public class LineaPedidosDAO implements ILineaPedidosDAO{
     }
 
     @Override
-    public ArrayList<LineaPedidos> getLineas(String where) {
-        ArrayList<LineaPedidos> listaLineas = new ArrayList<LineaPedidos>();
-        String sql= "select * from lineaspedidos "+where;
+    public ArrayList<LineaPedidos> getLineas(int idPedido) {
+        ArrayList<LineaPedidos> listaLineas = new ArrayList();
+        String sql= "select * from lineaspedidos where IdPedido="+idPedido;
         try{
-            PreparedStatement preparada = ConnectionFactory.getConnection().prepareStatement(sql);
-            try(ResultSet resultado = preparada.executeQuery() ){
+            Statement sentencia = ConnectionFactory.getConnection().createStatement();
+            try(ResultSet resultado = sentencia.executeQuery(sql) ){
                 while(resultado.next()){
                     LineaPedidos linea= new LineaPedidos();
                     linea.setCantidad(resultado.getInt("Cantidad"));
@@ -52,6 +54,8 @@ public class LineaPedidosDAO implements ILineaPedidosDAO{
                     linea.setIdProducto(resultado.getInt("IdProducto"));
                     linea.setNumeroLinea(resultado.getInt("NumeroLinea"));
                     linea.setPrecioUnitario(resultado.getDouble("PrecioUnitario"));
+                    ProductosDAO producto = new ProductosDAO();
+                    linea.setProducto(producto.getProductos("where IdProducto="+resultado.getInt("IdProducto")));
                     listaLineas.add(linea);
                 }
             }
